@@ -1,4 +1,5 @@
 ﻿;Written by TJCodeMaster
+;https://github.com/tjcodemaster/WinMoveResize.git
 ;Script that lets you move around windows with the arrow keys while holding down the windows key
 ;Hold Ctrl to resize instead of move
 ;Hold Shift to resize opposing corner
