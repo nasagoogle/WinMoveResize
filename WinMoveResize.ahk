@@ -35,7 +35,7 @@ LWin & Left::
 	}
 	LWinLeft := true 					
 	return
-LWin & Left Up:: LWinLeft := false
+~LWin & Left Up:: LWinLeft := false
 
 LWin & Right:: 
 	if (!FirstMoved) {
@@ -44,7 +44,7 @@ LWin & Right::
 	}
 	LWinRight := true 				
 	return
-LWin & Right Up:: LWinRight := false
+~LWin & Right Up:: LWinRight := false
 
 LWin & Up:: 
 	if (!FirstMoved) {
@@ -53,7 +53,7 @@ LWin & Up::
 	}
 	LWinUp := true						
 	return
-LWin & Up Up:: LWinUp := false
+~LWin & Up Up:: LWinUp := false
 
 LWin & Down:: 
 	if (!FirstMoved) {
@@ -62,7 +62,7 @@ LWin & Down::
 	}
 	LWinDown := true					
 	return
-LWin & Down Up:: LWinDown := false
+~LWin & Down Up:: LWinDown := false
 
 ;To reload script
 LWin & .:: 
