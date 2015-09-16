@@ -159,28 +159,112 @@ StretchFromLeft(Amount) {
 	WinGetActiveTitle, ActiveTitle
 	WinGetPos, Left, Top, Width, Height, %ActiveTitle%
 
+	NewLeft := Left
+	NewWidth := Width
+	ScreenWidth := GetScreenWidth()
+	ScreenLeft := GetScreenLeft()
+
 	if (GetKeyState("LCtrl")) {
 		if (GetKeyState("LShift")) {
-			WinMove, %ActiveTitle%,, Left, Top, Width - Amount, Height
+			NewWidth := Width - Amount
 		} else {
-			WinMove, %ActiveTitle%,, Left - Amount, Top, Width + Amount, Height
+			NewLeft := Left - Amount
+			NewWidth := Width + Amount
 		}
 	} else {
-		WinMove, %ActiveTitle%,, Left - Amount, Top, Width, Height
+		NewLeft := Left - Amount
 	}
+
+	if (NewLeft < ScreenLeft) {
+		NewLeft := ScreenLeft
+	}
+
+	if (NewLeft + NewWidth > ScreenWidth) {
+		NewWidth := ScreenWidth - NewLeft
+	}
+
+	WinMove, %ActiveTitle%,, NewLeft, Top, NewWidth, Height
 }
 
 StretchFromTop(Amount) {
 	WinGetActiveTitle, ActiveTitle
 	WinGetPos, Left, Top, Width, Height, %ActiveTitle%
 
+	NewTop := Top
+	NewHeight := Height
+	ScreenHeight := GetScreenHeight()
+	ScreenTop := GetScreenTop()
+
 	if (GetKeyState("LCtrl")) {
 		if (GetKeyState("LShift")) {
-			WinMove, %ActiveTitle%,, Left, Top, Width, Height + Amount
+			NewHeight := Height + Amount
 		} else {
-			WinMove, %ActiveTitle%,, Left, Top + Amount, Width, Height - Amount
+			NewTop := Top + Amount
+			NewHeight := Height - Amount
 		}
 	} else {
-		WinMove, %ActiveTitle%,, Left, Top + Amount, Width, Height
+		NewTop := Top + Amount
 	}
+
+	if (NewTop < ScreenTop) {
+		NewTop := ScreenTop
+	}
+
+	if (NewTop + NewHeight > ScreenHeight) {
+		NewHeight := ScreenHeight - NewTop
+	}
+
+	WinMove, %ActiveTitle%,, Left, NewTop, Width, NewHeight
+}
+
+GetScreenTop() {
+	ScreenCoord := 0
+	SysGet, MonitorCount, MonitorCount
+	Loop, %MonitorCount% {
+		SysGet, MonitorWorkArea, MonitorWorkArea, %A_Index%
+		if (MonitorWorkAreaTop < ScreenCoord) {
+			ScreenCoord := MonitorWorkAreaTop
+		}
+	}
+
+	return ScreenCoord
+}
+
+GetScreenLeft() {
+	ScreenCoord := 0
+	SysGet, MonitorCount, MonitorCount
+	Loop, %MonitorCount% {
+		SysGet, MonitorWorkArea, MonitorWorkArea, %A_Index%
+		if (MonitorWorkAreaLeft < ScreenCoord) {
+			ScreenCoord := MonitorWorkAreaLeft
+		}
+	}
+
+	return ScreenCoord
+}
+
+GetScreenWidth() {
+	ScreenCoord := 0
+	SysGet, MonitorCount, MonitorCount
+	Loop, %MonitorCount% {
+		SysGet, MonitorWorkArea, MonitorWorkArea, %A_Index%
+		if (MonitorWorkAreaRight > ScreenCoord) {
+			ScreenCoord := MonitorWorkAreaRight
+		}
+	}
+
+	return ScreenCoord
+}
+
+GetScreenHeight() {
+	ScreenCoord := 0
+	SysGet, MonitorCount, MonitorCount
+	Loop, %MonitorCount% {
+		SysGet, MonitorWorkArea, MonitorWorkArea, %A_Index%
+		if (MonitorWorkAreaBottom > ScreenCoord) {
+			ScreenCoord := MonitorWorkAreaBottom
+		}
+	}
+
+	return ScreenCoord
 }
